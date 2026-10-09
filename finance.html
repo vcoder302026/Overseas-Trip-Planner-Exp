@@ -1,0 +1,810 @@
+<!doctype html>
+<html lang="en" class="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Finance | Overseas Trip</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="frontend/js/tailwind.config.js"></script>
+    <link rel="stylesheet" href="frontend/css/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body
+    class="bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100 h-[100dvh] w-full flex flex-col overflow-hidden selection:bg-primary selection:text-white"
+  >
+    <div id="devModeBar" class="hidden-force"></div>
+    <div
+      id="toast"
+      class="fixed top-12 left-1/2 transform -translate-x-1/2 bg-gray-800 dark:bg-gray-100 text-white dark:text-gray-900 px-4 py-2 rounded-lg shadow-2xl z-[100] transition-opacity duration-300 opacity-0 pointer-events-none text-sm font-bold border-2 border-gray-700 dark:border-gray-200"
+    ></div>
+    <div
+      id="viewLoading"
+      class="fixed inset-0 z-50 flex justify-center items-center bg-gray-100 dark:bg-gray-950"
+    >
+      <div class="loader w-10 h-10"></div>
+    </div>
+
+    <div
+      id="authLayout"
+      class="flex-1 flex flex-col md:flex-row w-full bg-gray-50 dark:bg-gray-900 overflow-hidden"
+    >
+      <nav
+        class="order-2 md:order-1 w-full md:w-56 bg-white/95 dark:bg-gray-950/95 backdrop-blur-md border-t md:border-t-0 md:border-r-2 border-gray-200 dark:border-gray-800 flex flex-col pb-safe z-30 shrink-0 md:shadow-none transition-colors shadow-[0_-4px_15px_-5px_rgba(0,0,0,0.05)]"
+      >
+        <div
+          class="hidden md:flex flex-col p-5 border-b-2 border-gray-200 dark:border-gray-800 shrink-0"
+        >
+          <h1
+            class="font-black text-xl text-primary leading-tight tracking-tight mb-1"
+          >
+            Overseas Trip
+          </h1>
+          <span
+            id="deskTripName"
+            class="text-xs font-bold text-gray-500 uppercase tracking-wider truncate"
+          ></span>
+        </div>
+
+        <div
+          class="hidden md:flex flex-col p-5 border-b-2 border-gray-200 dark:border-gray-800 bg-gray-50/50 dark:bg-gray-900/50 shrink-0"
+        >
+          <span
+            class="text-xs font-semibold text-gray-400 mb-0.5 uppercase tracking-widest"
+            >Logged In As</span
+          >
+          <span
+            class="font-bold text-sm truncate text-gray-900 dark:text-gray-100"
+            id="deskUserName"
+            >User</span
+          >
+          <span
+            class="text-xs font-bold px-2 py-0.5 rounded border bg-green-50 text-green-700 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800 w-max mt-1.5 shadow-md"
+            id="deskUserRole"
+            >Role</span
+          >
+        </div>
+
+        <div
+          class="flex md:flex-col w-full md:p-3 md:gap-1.5 justify-around md:justify-start items-center md:items-stretch overflow-x-auto md:overflow-visible scrollbar-hide"
+        >
+          <a
+            href="dashboard.html"
+            id="nav-profile"
+            class="nav-item flex-1 md:flex-none flex flex-col md:flex-row items-center md:justify-start justify-center gap-0.5 md:gap-3 py-2 md:px-4 md:py-3 transition-all focus:outline-none text-gray-500 dark:text-gray-400 font-medium border-t-2 md:border-t-0 md:border-l-2 border-transparent hover:bg-gray-50 dark:hover:bg-gray-800 md:rounded-xl shrink-0"
+          >
+            <svg
+              class="w-[20px] h-[20px] md:w-5 md:h-5 shrink-0 mb-0.5 md:mb-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.8"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+              />
+            </svg>
+            <span class="text-xs md:text-sm whitespace-nowrap">Profile</span>
+          </a>
+
+          <a
+            href="roster.html"
+            id="nav-participants"
+            class="nav-item admin-only flex-1 md:flex-none flex flex-col md:flex-row items-center md:justify-start justify-center gap-0.5 md:gap-3 py-2 md:px-4 md:py-3 transition-all focus:outline-none text-gray-500 dark:text-gray-400 font-medium border-t-2 md:border-t-0 md:border-l-2 border-transparent hover:bg-gray-50 dark:hover:bg-gray-800 md:rounded-xl shrink-0"
+          >
+            <svg
+              class="w-[20px] h-[20px] md:w-5 md:h-5 shrink-0 mb-0.5 md:mb-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.8"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 9h3.75M15 12h3.75M15 15h3.75M4.5 19.5h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5zm6-10.125a1.875 1.875 0 11-3.75 0 1.875 1.875 0 013.75 0zm1.294 6.336a6.721 6.721 0 01-3.17.789 6.721 6.721 0 01-3.168-.789 3.376 3.376 0 016.338 0z"
+              />
+            </svg>
+            <span class="text-xs md:text-sm whitespace-nowrap">Roster</span>
+          </a>
+
+          <a
+            href="logistics.html"
+            id="nav-logistics"
+            class="nav-item admin-only flex-1 md:flex-none flex flex-col md:flex-row items-center md:justify-start justify-center gap-0.5 md:gap-3 py-2 md:px-4 md:py-3 transition-all focus:outline-none text-gray-500 dark:text-gray-400 font-medium border-t-2 md:border-t-0 md:border-l-2 border-transparent hover:bg-gray-50 dark:hover:bg-gray-800 md:rounded-xl shrink-0"
+          >
+            <svg
+              class="w-[20px] h-[20px] md:w-5 md:h-5 shrink-0 mb-0.5 md:mb-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.8"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+              />
+            </svg>
+            <span class="text-xs md:text-sm whitespace-nowrap">Logistics</span>
+          </a>
+
+          <a
+            href="attendance.html"
+            id="nav-attendance"
+            class="nav-item admin-only flex-1 md:flex-none flex flex-col md:flex-row items-center md:justify-start justify-center gap-0.5 md:gap-3 py-2 md:px-4 md:py-3 transition-all focus:outline-none text-gray-500 dark:text-gray-400 font-medium border-t-2 md:border-t-0 md:border-l-2 border-transparent hover:bg-gray-50 dark:hover:bg-gray-800 md:rounded-xl shrink-0"
+          >
+            <svg
+              class="w-[20px] h-[20px] md:w-5 md:h-5 shrink-0 mb-0.5 md:mb-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.8"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3l1.5 1.5 3-3.75"
+              />
+            </svg>
+            <span class="text-xs md:text-sm whitespace-nowrap">Attendance</span>
+          </a>
+
+          <a
+            href="finance.html"
+            id="nav-finance"
+            class="nav-item admin-only flex-1 md:flex-none flex flex-col md:flex-row items-center md:justify-start justify-center gap-0.5 md:gap-3 py-2 md:px-4 md:py-3 transition-all focus:outline-none text-primary dark:text-green-400 font-bold border-t-2 md:border-t-0 md:border-l-2 border-primary md:bg-green-50 md:dark:bg-gray-800 md:rounded-xl shrink-0"
+          >
+            <svg
+              class="w-[20px] h-[20px] md:w-5 md:h-5 shrink-0 mb-0.5 md:mb-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.8"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            <span class="text-xs md:text-sm whitespace-nowrap">Finance</span>
+          </a>
+
+          <a
+            href="minutes.html"
+            id="nav-minutes"
+            class="nav-item admin-only flex-1 md:flex-none flex flex-col md:flex-row items-center md:justify-start justify-center gap-0.5 md:gap-3 py-2 md:px-4 md:py-3 transition-all focus:outline-none text-gray-500 dark:text-gray-400 font-medium border-t-2 md:border-t-0 md:border-l-2 border-transparent hover:bg-gray-50 dark:hover:bg-gray-800 md:rounded-xl shrink-0"
+          >
+            <svg
+              class="w-[20px] h-[20px] md:w-5 md:h-5 shrink-0 mb-0.5 md:mb-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.8"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+              />
+            </svg>
+            <span class="text-xs md:text-sm whitespace-nowrap">Minutes</span>
+          </a>
+
+          <a
+            href="files.html"
+            id="nav-files"
+            class="nav-item admin-only flex-1 md:flex-none flex flex-col md:flex-row items-center md:justify-start justify-center gap-0.5 md:gap-3 py-2 md:px-4 md:py-3 transition-all focus:outline-none text-gray-500 dark:text-gray-400 font-medium border-t-2 md:border-t-0 md:border-l-2 border-transparent hover:bg-gray-50 dark:hover:bg-gray-800 md:rounded-xl shrink-0"
+          >
+            <svg
+              class="w-[20px] h-[20px] md:w-5 md:h-5 shrink-0 mb-0.5 md:mb-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.8"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z"
+              />
+            </svg>
+            <span class="text-xs md:text-sm whitespace-nowrap">Files</span>
+          </a>
+
+          <a
+            href="settings.html"
+            id="nav-settings"
+            class="nav-item admin-only flex-1 md:flex-none flex flex-col md:flex-row items-center md:justify-start justify-center gap-0.5 md:gap-3 py-2 md:px-4 md:py-3 transition-all focus:outline-none text-gray-500 dark:text-gray-400 font-medium border-t-2 md:border-t-0 md:border-l-2 border-transparent hover:bg-gray-50 dark:hover:bg-gray-800 md:rounded-xl shrink-0"
+          >
+            <svg
+              class="w-[20px] h-[20px] md:w-5 md:h-5 shrink-0 mb-0.5 md:mb-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.8"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"
+              />
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+            <span class="text-xs md:text-sm whitespace-nowrap">Settings</span>
+          </a>
+        </div>
+
+        <div
+          class="hidden md:block mt-auto p-4 border-t-2 border-gray-200 dark:border-gray-800 shrink-0"
+        >
+          <button
+            onclick="logout(this)"
+            class="w-full flex items-center justify-center gap-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-200 font-bold py-2.5 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition focus:outline-none border-2 border-gray-300 dark:border-gray-700 shadow-md"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+              />
+            </svg>
+            <span class="btn-text">Logout</span>
+            <div class="btn-spinner hidden-force !w-3 !h-3"></div>
+          </button>
+        </div>
+      </nav>
+
+      <div
+        class="order-1 md:order-2 flex-1 flex flex-col min-w-0 h-full overflow-hidden relative"
+      >
+        <header
+          class="flex items-center justify-between bg-white dark:bg-gray-950 border-b-2 border-gray-200 dark:border-gray-800 px-3 md:px-4 py-1 shrink-0 z-20 shadow-md"
+        >
+          <div class="flex flex-col md:hidden w-1/2 min-w-0">
+            <span
+              class="font-black text-lg text-primary leading-tight truncate tracking-tight"
+              >Overseas Trip</span
+            >
+            <span
+              id="mobTripName"
+              class="text-xs font-bold text-gray-500 uppercase tracking-wider truncate"
+            ></span>
+          </div>
+
+          <div
+            id="headerLegend"
+            class="hidden md:flex flex-wrap gap-1 flex-1 px-4 min-w-0"
+          ></div>
+
+          <div
+            class="flex items-center gap-1.5 md:gap-3 shrink-0 justify-end w-1/2 md:w-auto"
+          >
+            <button
+              onclick="updateApp(this)"
+              class="relative p-1.5 md:p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition focus:outline-none"
+            >
+              <svg
+                class="w-5 h-5 md:w-5 md:h-5 transition-transform duration-500 active:rotate-180 btn-icon"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                ></path>
+              </svg>
+              <div
+                class="btn-spinner spinner-primary dark:spinner-white hidden-force !w-4 !h-4 border-2 absolute inset-0 m-auto"
+              ></div>
+            </button>
+            <button
+              onclick="toggleTheme()"
+              class="p-1.5 md:p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-800 transition focus:outline-none"
+            >
+              🌗
+            </button>
+            <button
+              onclick="logout(this)"
+              class="md:hidden p-1.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition focus:outline-none"
+            >
+              <svg
+                class="w-5 h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                />
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <div
+          id="mobHeaderLegend"
+          class="md:hidden bg-white dark:bg-gray-950 border-b-2 border-gray-100 dark:border-gray-800 px-3 py-0.5 flex flex-wrap gap-1 shrink-0 empty:hidden"
+        ></div>
+
+        <main
+          id="tabContainer"
+          class="flex-1 overflow-hidden flex flex-col overflow-x-hidden p-1 md:p-2 w-full relative custom-scrollbar bg-gray-50 dark:bg-gray-950"
+        >
+          <div
+            id="tab-finance"
+            class="h-full min-h-full flex flex-col w-full max-w-6xl mx-auto"
+          ></div>
+        </main>
+      </div>
+    </div>
+
+    <!-- EXCHANGE RATES MODAL -->
+    <div
+      id="financeRatesModal"
+      class="fixed inset-0 bg-black/60 z-[96] hidden-force flex justify-center items-center p-4 backdrop-blur-sm transition-opacity"
+    >
+      <div
+        class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-sm p-5 shadow-2xl border-2 border-gray-200 dark:border-gray-700 m-auto animate-slide-up flex flex-col max-h-[90vh]"
+      >
+        <div
+          class="flex justify-between items-center mb-3 border-b-2 border-gray-200 dark:border-gray-700 pb-2 shrink-0"
+        >
+          <h3
+            class="text-base font-black text-gray-900 dark:text-white flex items-center gap-2"
+          >
+            <svg
+              class="w-5 h-5 text-green-500 shrink-0"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+            Exchange Rates
+          </h3>
+          <button
+            type="button"
+            onclick="closeFinanceRatesModal()"
+            class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-2xl font-bold px-1 focus:outline-none shrink-0"
+          >
+            &times;
+          </button>
+        </div>
+        <div
+          id="financeRatesList"
+          class="overflow-y-auto custom-scrollbar flex-grow space-y-2 pb-2"
+        ></div>
+        <div
+          class="mt-3 pt-3 border-t-2 border-gray-200 dark:border-gray-700 shrink-0 flex justify-end"
+        >
+          <button
+            onclick="closeFinanceRatesModal()"
+            class="bg-primary text-white py-2 px-6 rounded-lg font-bold shadow-md hover:bg-green-600 transition focus:outline-none"
+          >
+            Done
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- EDIT RECEIPT MODAL -->
+    <div
+      id="editReceiptModal"
+      class="fixed inset-0 bg-black/60 z-[97] hidden-force flex justify-center items-center p-4 backdrop-blur-sm transition-opacity"
+    >
+      <div
+        class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-xl shadow-2xl border-2 border-gray-200 dark:border-gray-700 m-auto animate-slide-up flex flex-col max-h-[92vh]"
+      >
+        <div
+          class="flex justify-between items-center p-5 border-b-2 border-gray-200 dark:border-gray-700 shrink-0"
+        >
+          <div class="flex items-center gap-2.5">
+            <div class="p-2 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-xl">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-base font-black text-gray-900 dark:text-white leading-tight">
+                Edit Receipt
+              </h3>
+              <p class="text-xs text-gray-400 font-mono" id="editRecIdLabel">Receipt ID</p>
+            </div>
+          </div>
+          <button
+            type="button"
+            onclick="closeEditReceiptModal()"
+            class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 text-2xl font-bold px-2 focus:outline-none shrink-0"
+          >
+            &times;
+          </button>
+        </div>
+
+        <form id="editReceiptForm" onsubmit="saveEditedReceipt(event)" class="overflow-y-auto custom-scrollbar flex-grow p-5 space-y-4">
+          <input type="hidden" id="editRecId" />
+          <input type="hidden" id="editRecTs" />
+
+          <!-- Personnel Section -->
+          <div class="bg-gray-50 dark:bg-gray-900/50 p-3.5 rounded-xl border border-gray-200 dark:border-gray-700/60 space-y-3">
+            <div class="text-xs font-black uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+              </svg>
+              Personnel Information
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold mb-1 text-gray-600 dark:text-gray-300">
+                  Uploader (Participant)
+                </label>
+                <select
+                  id="editRecUploaderSelect"
+                  onchange="handleEditUploaderSelect(this.value)"
+                  class="w-full text-xs font-medium bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:outline-none focus:border-blue-500"
+                >
+                  <option value="">Select participant...</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold mb-1 text-gray-600 dark:text-gray-300">
+                  Uploader NRIC
+                </label>
+                <input
+                  type="text"
+                  id="editRecUploaderNric"
+                  required
+                  placeholder="e.g. S1234567A"
+                  class="w-full text-xs font-mono uppercase bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold mb-1 text-gray-600 dark:text-gray-300">
+                  Uploader Full Name
+                </label>
+                <input
+                  type="text"
+                  id="editRecUploaderName"
+                  placeholder="e.g. Tan Ah Kow"
+                  class="w-full text-xs bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold mb-1 text-gray-600 dark:text-gray-300">
+                  Paid By (Person who made payment)
+                </label>
+                <select
+                  id="editRecPaidBySelect"
+                  onchange="handleEditPaidBySelect(this.value)"
+                  class="w-full text-xs font-medium bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:outline-none focus:border-blue-500"
+                >
+                  <option value="">Select payer...</option>
+                </select>
+                <input
+                  type="text"
+                  id="editRecPaidByNric"
+                  placeholder="Or enter Paid By NRIC"
+                  class="mt-1.5 w-full text-xs font-mono uppercase bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Expense Details -->
+          <div class="bg-gray-50 dark:bg-gray-900/50 p-3.5 rounded-xl border border-gray-200 dark:border-gray-700/60 space-y-3">
+            <div class="text-xs font-black uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Expense & Category
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-bold mb-1 text-gray-600 dark:text-gray-300">
+                  Category
+                </label>
+                <select
+                  id="editRecCategory"
+                  required
+                  class="w-full text-xs font-semibold bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:outline-none focus:border-blue-500"
+                >
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold mb-1 text-gray-600 dark:text-gray-300">
+                  Currency
+                </label>
+                <select
+                  id="editRecCurrency"
+                  onchange="handleEditCurrencyChange(this.value)"
+                  class="w-full text-xs font-bold bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:outline-none focus:border-blue-500"
+                >
+                  <option value="SGD">SGD - Singapore Dollar</option>
+                  <option value="MYR">MYR - Malaysian Ringgit</option>
+                  <option value="USD">USD - US Dollar</option>
+                  <option value="EUR">EUR - Euro</option>
+                  <option value="GBP">GBP - British Pound</option>
+                  <option value="AUD">AUD - Australian Dollar</option>
+                  <option value="IDR">IDR - Indonesian Rupiah</option>
+                  <option value="THB">THB - Thai Baht</option>
+                  <option value="JPY">JPY - Japanese Yen</option>
+                  <option value="KRW">KRW - South Korean Won</option>
+                  <option value="TWD">TWD - New Taiwan Dollar</option>
+                  <option value="PHP">PHP - Philippine Peso</option>
+                  <option value="VND">VND - Vietnamese Dong</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold mb-1 text-gray-600 dark:text-gray-300">
+                  Amount (<span id="editRecCurLabel">SGD</span>)
+                </label>
+                <input
+                  type="number"
+                  step="0.01"
+                  id="editRecAmount"
+                  required
+                  oninput="handleEditAmountInput()"
+                  placeholder="0.00"
+                  class="w-full text-xs font-bold bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:outline-none focus:border-blue-500"
+                />
+              </div>
+
+              <!-- Rates Row -->
+              <div id="editRecRateContainer" class="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-3 bg-white dark:bg-gray-800 p-2.5 rounded-lg border border-gray-200 dark:border-gray-700">
+                <div>
+                  <label class="block text-[11px] font-bold text-gray-500 dark:text-gray-400 mb-0.5">
+                    Rate: 1 <span class="rateCurCode">MYR</span> = ? SGD
+                  </label>
+                  <input
+                    type="number"
+                    step="0.000001"
+                    id="editRecRate"
+                    oninput="handleEditRateInput(this.value)"
+                    class="w-full text-xs font-mono bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded p-1.5 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold text-gray-500 dark:text-gray-400 mb-0.5">
+                    Inverse: 1 SGD = ? <span class="rateCurCode">MYR</span>
+                  </label>
+                  <input
+                    type="number"
+                    step="0.000001"
+                    id="editRecInverseRate"
+                    oninput="handleEditInverseRateInput(this.value)"
+                    class="w-full text-xs font-mono bg-gray-50 dark:bg-gray-900 border border-gray-300 dark:border-gray-600 rounded p-1.5 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+              </div>
+
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-bold mb-1 text-gray-600 dark:text-gray-300">
+                  SGD Total Equivalent
+                </label>
+                <div class="relative">
+                  <span class="absolute left-3 top-2.5 text-xs font-bold text-gray-400">SGD $</span>
+                  <input
+                    type="number"
+                    step="0.01"
+                    id="editRecSgdAmount"
+                    required
+                    oninput="handleEditSgdAmountInput()"
+                    class="w-full text-xs font-black pl-14 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:outline-none focus:border-blue-500"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- File & Remarks Section -->
+          <div class="bg-gray-50 dark:bg-gray-900/50 p-3.5 rounded-xl border border-gray-200 dark:border-gray-700/60 space-y-3">
+            <div class="text-xs font-black uppercase tracking-wider text-gray-500 dark:text-gray-400 flex items-center gap-1.5">
+              <svg class="w-3.5 h-3.5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+              </svg>
+              Receipt File & Remarks
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold mb-1 text-gray-600 dark:text-gray-300">
+                Current Receipt File
+              </label>
+              <div id="editRecCurrentFileWrapper" class="flex items-center gap-2 p-2 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg">
+                <a
+                  id="editRecFileLink"
+                  href="#"
+                  target="_blank"
+                  class="text-xs font-bold text-blue-600 hover:text-blue-700 dark:text-blue-400 underline flex items-center gap-1.5"
+                >
+                  <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                  <span id="editRecFileLinkText">View Receipt</span>
+                </a>
+                <span id="editRecNoFileText" class="text-xs text-gray-400 italic hidden-force">No file attached</span>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold mb-1 text-gray-600 dark:text-gray-300">
+                Replace Receipt File (Optional)
+              </label>
+              <input
+                type="file"
+                id="editRecFileInput"
+                accept="image/*,application/pdf"
+                class="w-full text-xs text-gray-500 dark:text-gray-400 file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-bold file:bg-blue-50 file:text-blue-700 dark:file:bg-blue-900/30 dark:file:text-blue-400 hover:file:bg-blue-100 dark:hover:file:bg-blue-900/50 cursor-pointer"
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold mb-1 text-gray-600 dark:text-gray-300">
+                Direct File URL (Optional)
+              </label>
+              <input
+                type="url"
+                id="editRecFileUrl"
+                placeholder="https://..."
+                class="w-full text-xs bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:outline-none focus:border-blue-500 font-mono"
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold mb-1 text-gray-600 dark:text-gray-300">
+                Remarks / Notes
+              </label>
+              <textarea
+                id="editRecRemarks"
+                rows="2"
+                placeholder="Any special notes or itemization..."
+                class="w-full text-xs bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg p-2.5 focus:outline-none focus:border-blue-500 resize-none"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Reimbursement Status -->
+          <div class="bg-gray-50 dark:bg-gray-900/50 p-3.5 rounded-xl border border-gray-200 dark:border-gray-700/60 flex items-center justify-between">
+            <div>
+              <label for="editRecIsReimbursed" class="text-xs font-bold text-gray-800 dark:text-gray-200 cursor-pointer">
+                Reimbursement Status
+              </label>
+              <p class="text-[11px] text-gray-400">Has this payment been reimbursed to the payer?</p>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" id="editRecIsReimbursed" class="sr-only peer" />
+              <div class="w-11 h-6 bg-gray-300 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+            </label>
+          </div>
+
+          <div id="editRecError" class="p-2.5 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 text-xs font-bold rounded-lg hidden-force"></div>
+          
+          <div class="pt-3 border-t-2 border-gray-200 dark:border-gray-700 shrink-0 flex items-center justify-end gap-2.5">
+            <button
+              type="button"
+              onclick="closeEditReceiptModal()"
+              class="px-4 py-2 rounded-lg text-xs font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition focus:outline-none"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              id="editRecSaveBtn"
+              class="px-6 py-2 bg-blue-600 text-white rounded-lg text-xs font-bold shadow-md hover:bg-blue-700 transition focus:outline-none flex items-center gap-2"
+            >
+              <span>Save Changes</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- DELETE RECEIPT CONFIRMATION MODAL -->
+    <div
+      id="deleteReceiptModal"
+      class="fixed inset-0 bg-black/60 z-[98] hidden-force flex justify-center items-center p-4 backdrop-blur-sm transition-opacity"
+    >
+      <div
+        class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md shadow-2xl border-2 border-red-200 dark:border-red-900/50 p-6 m-auto animate-slide-up flex flex-col"
+      >
+        <div class="flex items-center gap-3 mb-3">
+          <div class="p-2.5 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-xl shrink-0">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-base font-black text-gray-900 dark:text-white leading-tight">
+              Delete Receipt
+            </h3>
+            <p class="text-xs text-gray-500 dark:text-gray-400">
+              Are you sure you want to delete this receipt?
+            </p>
+          </div>
+        </div>
+
+        <div id="deleteRecDetails" class="bg-gray-50 dark:bg-gray-900/50 p-3.5 rounded-xl border border-gray-200 dark:border-gray-700 mb-4 text-xs space-y-1.5 font-medium">
+          <!-- Populated dynamically -->
+        </div>
+
+        <p class="text-xs text-red-600 dark:text-red-400 mb-5 font-bold">
+          Warning: This action will remove the receipt and update all associated finance totals.
+        </p>
+
+        <div class="flex items-center justify-end gap-2.5">
+          <button
+            type="button"
+            onclick="closeDeleteReceiptModal()"
+            class="px-4 py-2 rounded-lg text-xs font-bold text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition focus:outline-none"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            id="confirmDeleteRecBtn"
+            onclick="executeDeleteReceiptConfirmed()"
+            class="px-5 py-2 bg-red-600 text-white rounded-lg text-xs font-bold shadow-md hover:bg-red-700 transition focus:outline-none flex items-center gap-2"
+          >
+            <span>Delete Receipt</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="backend/config.js"></script>
+    <script src="frontend/js/api.js"></script>
+    <script src="frontend/js/state.js"></script>
+    <script src="frontend/js/ui.js"></script>
+    <script src="frontend/js/main.js"></script>
+    <script src="frontend/js/auth.js"></script>
+    <script src="frontend/js/finance.js"></script>
+    <script>
+      window.initPage = () => {
+        if (currentUser && currentUser.role !== "admin") {
+          navigateTo("dashboard.html");
+          return;
+        }
+        buildFinanceUI();
+      };
+    </script>
+  </body>
+</html>
